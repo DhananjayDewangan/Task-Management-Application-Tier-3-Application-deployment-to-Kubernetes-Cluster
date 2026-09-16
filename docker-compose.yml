@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: task-management-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: task_management
+      POSTGRES_USER: taskuser
+      POSTGRES_PASSWORD: taskpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: task-management-backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: task_management
+      DB_USER: taskuser
+      DB_PASSWORD: taskpassword
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
