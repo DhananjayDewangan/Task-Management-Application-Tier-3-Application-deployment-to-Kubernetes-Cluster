@@ -31,3 +31,6 @@ Thumbs.db
 
 # Node
 npm-debug.log*
+# Terraform variable files
+*.tfvars
+*.tfvars.json
