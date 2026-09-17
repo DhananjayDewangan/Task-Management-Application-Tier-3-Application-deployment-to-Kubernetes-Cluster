@@ -248,3 +248,85 @@ resource "kubernetes_deployment_v1" "backend" {
     }
   }
 }
+
+resource "kubernetes_service_v1" "backend" {
+  metadata {
+    name      = "backend"
+    namespace = kubernetes_namespace_v1.task_management.metadata[0].name
+  }
+
+  spec {
+    selector = {
+      app = "backend"
+    }
+
+    port {
+      port        = 3000
+      target_port = 3000
+      protocol    = "TCP"
+    }
+
+    type = "ClusterIP"
+  }
+}
+
+resource "kubernetes_deployment_v1" "frontend" {
+  metadata {
+    name      = "frontend"
+    namespace = kubernetes_namespace_v1.task_management.metadata[0].name
+
+    labels = {
+      app = "frontend"
+    }
+  }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "frontend"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "frontend"
+        }
+      }
+
+      spec {
+        container {
+          name  = "frontend"
+          image = "dhananjaydewangan/task-management-frontend:1.0"
+
+          port {
+            container_port = 80
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_service_v1" "frontend" {
+  metadata {
+    name      = "frontend"
+    namespace = kubernetes_namespace_v1.task_management.metadata[0].name
+  }
+
+  spec {
+    selector = {
+      app = "frontend"
+    }
+
+    port {
+      port        = 80
+      target_port = 80
+      protocol    = "TCP"
+    }
+
+    type = "NodePort"
+  }
+}
