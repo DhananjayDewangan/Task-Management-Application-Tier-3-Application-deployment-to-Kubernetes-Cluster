@@ -160,3 +160,91 @@ resource "kubernetes_service_v1" "postgres" {
     type = "ClusterIP"
   }
 }
+
+resource "kubernetes_deployment_v1" "backend" {
+  metadata {
+    name      = "backend"
+    namespace = kubernetes_namespace_v1.task_management.metadata[0].name
+
+    labels = {
+      app = "backend"
+    }
+  }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "backend"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "backend"
+        }
+      }
+
+      spec {
+        container {
+          name  = "backend"
+          image = "dhananjaydewangan/task-management-backend:1.0"
+
+          port {
+            container_port = 3000
+          }
+
+          env {
+            name  = "DB_HOST"
+            value = "postgres"
+          }
+
+          env {
+            name  = "DB_PORT"
+            value = "5432"
+          }
+
+          env {
+            name = "DB_NAME"
+
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret_v1.postgres.metadata[0].name
+                key  = "POSTGRES_DB"
+              }
+            }
+          }
+
+          env {
+            name = "DB_USER"
+
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret_v1.postgres.metadata[0].name
+                key  = "POSTGRES_USER"
+              }
+            }
+          }
+
+          env {
+            name = "DB_PASSWORD"
+
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret_v1.postgres.metadata[0].name
+                key  = "POSTGRES_PASSWORD"
+              }
+            }
+          }
+
+          env {
+            name  = "PORT"
+            value = "3000"
+          }
+        }
+      }
+    }
+  }
+}
