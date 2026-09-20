@@ -267,6 +267,9 @@ resource "kubernetes_deployment_v1" "backend" {
             name  = "PORT"
             value = "3000"
           }
+
+          image_pull_policy = "Always"
+
         }
       }
     }
@@ -328,6 +331,9 @@ resource "kubernetes_deployment_v1" "frontend" {
           port {
             container_port = 8080
           }
+
+          image_pull_policy = "Always"
+
         }
       }
     }
