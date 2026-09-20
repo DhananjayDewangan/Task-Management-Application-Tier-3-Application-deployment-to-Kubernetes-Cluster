@@ -190,7 +190,7 @@ resource "kubernetes_deployment_v1" "backend" {
       spec {
         container {
           name  = "backend"
-          image = "dhananjaydewangan/task-management-backend:1.0"
+          image = "dhananjaydewangan/task-management-backend:${var.image_tag}"
 
           port {
             container_port = 3000
@@ -323,7 +323,7 @@ resource "kubernetes_deployment_v1" "frontend" {
       spec {
         container {
           name  = "frontend"
-          image = "dhananjaydewangan/task-management-frontend:1.0"
+          image = "dhananjaydewangan/task-management-frontend:${var.image_tag}"
 
           port {
             container_port = 8080
