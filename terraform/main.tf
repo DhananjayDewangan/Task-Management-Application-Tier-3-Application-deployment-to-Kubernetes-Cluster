@@ -196,6 +196,30 @@ resource "kubernetes_deployment_v1" "backend" {
             container_port = 3000
           }
 
+          readiness_probe {
+            http_get {
+              path = "/api/health"
+              port = 3000
+            }
+
+            initial_delay_seconds = 5
+            period_seconds        = 10
+            timeout_seconds       = 2
+            failure_threshold     = 3
+          }
+
+          liveness_probe {
+            http_get {
+              path = "/api/health"
+              port = 3000
+            }
+
+            initial_delay_seconds = 15
+            period_seconds        = 20
+            timeout_seconds       = 2
+            failure_threshold     = 3
+          }
+
           env {
             name  = "DB_HOST"
             value = "postgres"
