@@ -326,7 +326,7 @@ resource "kubernetes_deployment_v1" "frontend" {
           image = "dhananjaydewangan/task-management-frontend:1.0"
 
           port {
-            container_port = 80
+            container_port = 8080
           }
         }
       }
