@@ -115,11 +115,11 @@ This project implements a task management application with:
 ## Application Features
 The application supports task CRUD operations:
 
--Create a task
--List tasks
--Update a task
--Mark a task as completed
--Delete a task
+- Create a task
+- List tasks
+- Update a task
+- Mark a task as completed
+- Delete a task
 
 The backend exposes a health endpoint:
 
@@ -140,14 +140,14 @@ Expected response:
 #### Prerequisites
 
 **Install:**
--Git
--Node.js 24
--npm
--Docker Desktop
--WSL2 if using Windows
--Kind
--kubectl
--Terraform
+- Git
+- Node.js 24
+- npm
+- Docker Desktop
+- WSL2 if using Windows
+- Kind
+- kubectl
+- Terraform
 
 
 ### Backend
@@ -217,12 +217,12 @@ kubectl get nodes
 
 ### Terraform
 Terraform manages the Kubernetes resources, including:
--Namespace
--PostgreSQL Secret
--PostgreSQL PersistentVolumeClaim
--PostgreSQL Deployment and Service
--Backend Deployment and Service
--Frontend Deployment and Service
+- Namespace
+- PostgreSQL Secret
+- PostgreSQL PersistentVolumeClaim
+- PostgreSQL Deployment and Service
+- Backend Deployment and Service
+- Frontend Deployment and Service
 
 Initialize Terraform:
 ```
@@ -246,9 +246,9 @@ Do not commit that file.
 
 ### Kubernetes Services
 The application uses:
--Frontend: NodePort
--Backend: ClusterIP
--PostgreSQL: ClusterIP
+- Frontend: NodePort
+- Backend: ClusterIP
+- PostgreSQL: ClusterIP
 
 The frontend is the externally accessible application entry point.
 
@@ -273,12 +273,12 @@ Run:
 ./scripts/deploy.sh
 ```
 The script:
-1.Checks the active Kubernetes context.
-2.Checks Kubernetes node availability.
-3.Applies the Terraform configuration.
-4.Restarts the backend deployment.
-5.Restarts the frontend deployment.
-6.Waits for both rollouts to complete.
+* Checks the active Kubernetes context.
+* Checks Kubernetes node availability.
+* Applies the Terraform configuration.
+* Restarts the backend deployment.
+* Restarts the frontend deployment.
+* Waits for both rollouts to complete.
 
 The context check helps prevent accidentally deploying this project to an unintended Kubernetes cluster.
 
@@ -299,35 +299,35 @@ This static-tag approach is intentionally simple for this local learning project
 
 For a production system, immutable versioned tags such as Git commit SHAs would generally provide stronger release traceability.
 
-### CI Pipeline
+## CI Pipeline
 
 GitHub Actions runs on pushes and pull requests targeting main.
 
 The pipeline contains:
 
-**Backend CI**
--Checkout repository
--Set up Node.js 24
--Install dependencies with npm ci
--Validate backend syntax
+### Backend CI
+- Checkout repository
+- Set up Node.js 24
+- Install dependencies with npm ci
+- Validate backend syntax
 
-**Frontend CI**
--Checkout repository
--Set up Node.js 24
--Install dependencies with npm ci
--Run frontend linting
--Build the frontend
+### Frontend CI
+- Checkout repository
+- Set up Node.js 24
+- Install dependencies with npm ci
+- Run frontend linting
+- Build the frontend
 
-**Docker Build and Push**
+### Docker Build and Push
 After the backend and frontend CI jobs succeed:
 
--Authenticate to Docker Hub
--Build the backend image
--Push the backend :1.0 image
--Build the frontend image
--Push the frontend :1.0 image
+- Authenticate to Docker Hub
+- Build the backend image
+- Push the backend :1.0 image
+- Build the frontend image
+- Push the frontend :1.0 image
 
-**GitHub-hosted runners are used for CI.**
+### GitHub-hosted runners are used for CI.
 
 **The local Kind cluster is not automatically deployed from GitHub Actions.**
 
@@ -408,19 +408,19 @@ Terraform provides a reproducible definition of the Kubernetes infrastructure ra
 ### Future Improvements
 
 Possible future improvements include:
--Immutable Docker image tags based on Git commit SHA
--Automated deployment to a remote Kubernetes cluster
--Helm charts
--Kubernetes Ingress
--TLS
--External secret management
--Database initialization through Kubernetes configuration
--Automated integration tests
--Prometheus monitoring
--Grafana dashboards
--Centralized logging
--Kubernetes resource limits and autoscaling
--Production-grade PostgreSQL architecture
+- Immutable Docker image tags based on Git commit SHA
+- Automated deployment to a remote Kubernetes cluster
+- Helm charts
+- Kubernetes Ingress
+- TLS
+- External secret management
+- Database initialization through Kubernetes configuration
+- Automated integration tests
+- Prometheus monitoring
+- Grafana dashboards
+- Centralized logging
+- Kubernetes resource limits and autoscaling
+- Production-grade PostgreSQL architecture
 
 ### Status
 
