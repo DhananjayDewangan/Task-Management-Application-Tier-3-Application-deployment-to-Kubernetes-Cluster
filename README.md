@@ -73,7 +73,7 @@ This project implements a task management application with:
 
 
 ## Project Structure
-.
+```
 ├── backend/
 │   ├── src/
 │   ├── .dockerignore
@@ -110,7 +110,7 @@ This project implements a task management application with:
 ├── .gitignore
 └── README.md
 
-
+```
 
 ## Application Features
 The application supports task CRUD operations:
